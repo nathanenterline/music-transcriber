@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  music-ai-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: music-ai-python311
+    volumes:
+      - ./audio_input:/app/audio_input:ro
+      - ./output:/app/output
+      - ./logs:/app/logs
+    tty: true
+
+  jupyter-dev:
+    image: jupyter/scipy-notebook
+    ports:
+      - "8889:8888"
+    volumes:
+      - ./notebooks:/home/jovyan/work
+    environment:
+      - JUPYTER_ENABLE_LAB=yes
